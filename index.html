@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K9music - Discord Music Bot</title>
+    <link rel="icon" type="image/png" href="k9-logo.png">
+    <link rel="shortcut icon" href="k9-logo.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            padding: 2rem 0;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.1);
+            -webkit-backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .logo-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+        }
+
+        .logo-text {
+            background: linear-gradient(45deg, #00D4FF, #9B59B6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .invite-btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #00D4FF, #00FF7F);
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+        }
+
+        .invite-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 212, 255, 0.4);
+        }
+
+        .features {
+            padding: 4rem 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .commands {
+            padding: 4rem 0;
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .commands-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .command-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .command-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #00D4FF;
+        }
+
+        .command {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #00D4FF;
+        }
+
+        .command-name {
+            font-weight: bold;
+            color: #00FF7F;
+            font-family: 'Courier New', monospace;
+        }
+
+        .command-desc {
+            margin-top: 0.5rem;
+            opacity: 0.9;
+        }
+
+        .setup {
+            padding: 4rem 0;
+        }
+
+        .setup-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .step {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+        }
+
+        .step-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #00D4FF;
+            margin-bottom: 1rem;
+        }
+
+        .footer {
+            padding: 2rem 0;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.2);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #00D4FF, #9B59B6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2rem;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .logo-image {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .commands-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="k9-logo.png" alt="K9 Club Logo" class="logo-image">
+                <span class="logo-text">K9music</span>
+            </div>
+            <div class="tagline">Advanced Discord Music Bot - Stream YouTube Music Seamlessly</div>
+            <a href="https://discord.com/oauth2/authorize?client_id=1384569482588065895&permissions=8192&scope=bot%20applications.commands" class="invite-btn" target="_blank">
+                ➕ Add K9music to Your Server
+            </a>
+        </div>
+    </header>
+
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Why Choose K9music?</h2>
+            <p class="section-subtitle">Powerful features for an amazing music experience</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎶</div>
+                    <h3>High-Quality Streaming</h3>
+                    <p>Stream music directly from YouTube without downloads. Enjoy crystal-clear audio quality in your Discord voice channels.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3>Smart Queue Management</h3>
+                    <p>Add multiple songs, manage your queue, shuffle, loop, and skip tracks with ease. Your music, your way.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Autoplay Feature</h3>
+                    <p>Never run out of music! Autoplay automatically finds and plays related songs when your queue ends.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Instant Commands</h3>
+                    <p>Both text commands (k!) and modern slash commands (/splay) for ultimate convenience and speed.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Smart Search</h3>
+                    <p>Search by song name, artist, or paste YouTube URLs. K9music finds exactly what you're looking for.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🎮</div>
+                    <h3>Easy Controls</h3>
+                    <p>Pause, resume, skip, stop, and control volume with simple commands. Anyone can be a DJ!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="commands">
+        <div class="container">
+            <h2 class="section-title">Bot Commands</h2>
+            <p class="section-subtitle">Complete list of available commands</p>
+            
+            <div class="commands-grid">
+                <div class="command-section">
+                    <h3>🎵 Music Commands (Prefix: k! or K!)</h3>
+                    
+                    <div class="command">
+                        <div class="command-name">k!join</div>
+                        <div class="command-desc">Join your current voice channel</div>
+                    </div>
+                    
+                    <div class="command">
+                        <div class="command-name">k!play &lt;song&gt;</div>
+                        <div class="command-desc">Play a song from YouTube (search or URL)</div>
+                    </div>
+                    
+                    <div class="command">
+                        <div class="command-name">k!pause</div>
+                        <div class="command-desc">Pause the current song</div>
+                    </div>
+                    
+                    <div class="command">
+                        <div class="command-name">k!resume</div>
+                        <div class="command-desc">Resume playback</div>
+                    </div>
+                    
+                    <div class="command">
+                        <div class="command-name">k!skip</div>
+                        <div class="command-desc">Skip to the next song</div>
+                    </div>
+                    
+                    <div class="command">
+                        <div class="command-name">k!stop</div>
+                        <div class="command-desc">Stop playback and clear queue</div>
+                    </div>
+                    
+                    <div class="command">
+                        <div class="command-name">k!leave</div>
+                        <div class="command-desc">Leave the voice channel</div>
+                    </div>
+                    
+                    <div class="command">
+                        <div class="command-name">k!queue</div>
+                        <div class="command-desc">Show the current music queue</div>
+                    </div>
+                    
+                    <div class="command">
+                        <div class="command-name">k!autoplay</div>
+                        <div class="command-desc">Toggle autoplay on/off</div>
+                    </div>
+                </div>
+                
+                <div class="command-section">
+                    <h3>⚡ Slash Commands</h3>
+                    
+                    <div class="command">
+                        <div class="command-name">/sjoin</div>
+                        <div class="command-desc">Join your current voice channel</div>
+                    </div>
+                    
+                    <div class="command">
+                        <div class="command-name">/splay &lt;query&gt;</div>
+                        <div class="command-desc">Play a song from YouTube</div>
+                    </div>
+                    
+                    <div class="command">
+                        <div class="command-name">/spause</div>
+                        <div class="command-desc">Pause the current song</div>
+                    </div>
+                    
+                    <div class="command">
+                        <div class="command-name">/sresume</div>
+                        <div class="command-desc">Resume playback</div>
+                    </div>
+                    
+                    <div class="command">
+                        <div class="command-name">/sskip</div>
+                        <div class="command-desc">Skip to the next song</div>
+                    </div>
+                    
+                    <div class="command">
+                        <div class="command-name">/sstop</div>
+                        <div class="command-desc">Stop playback and clear queue</div>
+                    </div>
+                    
+                    <div class="command">
+                        <div class="command-name">/sleave</div>
+                        <div class="command-desc">Leave the voice channel</div>
+                    </div>
+                    
+                    <div class="command">
+                        <div class="command-name">/sautoplay</div>
+                        <div class="command-desc">Toggle autoplay mode</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="setup">
+        <div class="container">
+            <h2 class="section-title">How to Use K9music</h2>
+            <p class="section-subtitle">Get started in just 3 simple steps</p>
+            
+            <div class="setup-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Add to Server</h3>
+                    <p>Click the "Add K9music to Your Server" button above and select your Discord server.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Join Voice Channel</h3>
+                    <p>Join a voice channel in your Discord server where you want to play music.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Start Playing</h3>
+                    <p>Use <code>k!play [song name]</code> or <code>/splay [song name]</code> to start playing music!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 K9music Discord Bot. Built with love for music enthusiasts.</p>
+            <p>Powered by Python, Discord.py, and FFmpeg</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Add animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards
+        document.querySelectorAll('.feature-card, .command-section, .step').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
